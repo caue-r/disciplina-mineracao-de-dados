@@ -1,9 +1,16 @@
 """
 pip install pypdf
+<<<<<<< HEAD
 
 python parse_mare_cabedelo.py --pdf mareCabedelo.pdf --out mareCabedelo.csv
 """
 
+=======
+ 
+python parse_mare_cabedelo.py --pdf mareCabedelo.pdf --out mareCabedelo.csv
+"""
+ 
+>>>>>>> 11d0dbea894f858747f561d50432aa1817bc56cb
 import re
 import csv
 import argparse
@@ -42,10 +49,14 @@ RE_PAR     = re.compile(r"^(\d{4})\s+(-?\d+\.\d+)$")
  
  
 def extrair_texto_pdf(caminho: str) -> str:
+<<<<<<< HEAD
     try:
         from pypdf import PdfReader
     except ImportError:
         raise SystemExit("Instale pypdf:  pip install pypdf")
+=======
+    from pypdf import PdfReader
+>>>>>>> 11d0dbea894f858747f561d50432aa1817bc56cb
     reader = PdfReader(caminho)
     return "\n".join(p.extract_text() or "" for p in reader.pages)
  
@@ -123,33 +134,47 @@ def escrever_csv(registros: list, caminho: str) -> None:
         w = csv.DictWriter(f, fieldnames=campos)
         w.writeheader()
         w.writerows(registros)
+<<<<<<< HEAD
     print(f"✓ {len(registros)} registros salvos em '{caminho}'")
+=======
+>>>>>>> 11d0dbea894f858747f561d50432aa1817bc56cb
  
  
 def main():
     p = argparse.ArgumentParser(
         description="Converte tábua de marés do Porto de Cabedelo (PDF) → CSV."
     )
+<<<<<<< HEAD
     p.add_argument("--pdf",  default="23_-_porto_de_cabedelo_-_pb_-_77-79.pdf")
     p.add_argument("--out",  default="mare_cabedelo_2025.csv")
     p.add_argument("--ano",  type=int, default=2025)
+=======
+    p.add_argument("--pdf", default="23_-_porto_de_cabedelo_-_pb_-_77-79.pdf")
+    p.add_argument("--out", default="mare_cabedelo_2025.csv")
+    p.add_argument("--ano", type=int, default=2025)
+>>>>>>> 11d0dbea894f858747f561d50432aa1817bc56cb
     args = p.parse_args()
  
     pdf_path = Path(args.pdf)
     if not pdf_path.exists():
         raise SystemExit(f"Arquivo não encontrado: {pdf_path}")
  
+<<<<<<< HEAD
     print(f"Lendo '{pdf_path}' …")
     texto = extrair_texto_pdf(str(pdf_path))
  
     print("Parseando dados …")
     registros = parsear_texto(texto, args.ano)
+=======
+    registros = parsear_texto(extrair_texto_pdf(str(pdf_path)), args.ano)
+>>>>>>> 11d0dbea894f858747f561d50432aa1817bc56cb
  
     if not registros:
         raise SystemExit("Nenhum registro encontrado.")
  
     escrever_csv(registros, args.out)
  
+<<<<<<< HEAD
     print("\nPrimeiras 10 linhas:")
     print(f"{'data':<12} {'dia_semana':<15} {'hora':<6} {'altura_m':<10} tipo_mare")
     print("-" * 60)
@@ -164,3 +189,8 @@ def main():
  
 if __name__ == "__main__":
     main()
+=======
+if __name__ == "__main__":
+    main()
+ 
+>>>>>>> 11d0dbea894f858747f561d50432aa1817bc56cb
